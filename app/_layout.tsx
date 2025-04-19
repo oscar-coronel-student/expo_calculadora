@@ -1,13 +1,18 @@
 import { useEffect } from 'react';
-import { View } from 'react-native'
+import { Platform, View } from 'react-native'
 import { Slot, SplashScreen } from 'expo-router'
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
-
+import * as NavigationBar from 'expo-navigation-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import { globalStyles } from '@/styles/global.style';
 import { Colors } from '@/constants/Colors';
 
+
+const isAndroid = Platform.OS === 'android'
+
+isAndroid && NavigationBar.setBackgroundColorAsync('black');
 
 SplashScreen.preventAutoHideAsync();
 

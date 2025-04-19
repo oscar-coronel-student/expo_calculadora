@@ -16,10 +16,33 @@ const CalculatorApp = () => {
 
             {/* Filas de botones */}
             <View style={ globalStyles.row }>
-                <CalculatorButton label='C' color={ Colors.lightGray } blackText />
-                <CalculatorButton label='+/-' color={ Colors.lightGray } blackText />
-                <CalculatorButton label='del' color={ Colors.lightGray } blackText />
-                <CalculatorButton label='÷' color={ Colors.orange } />
+                <CalculatorButton onPress={ () => {} } label='C' color={ Colors.lightGray } blackText />
+                <CalculatorButton onPress={ () => {} } label='+/-' color={ Colors.lightGray } blackText />
+                <CalculatorButton onPress={ () => {} } label='del' color={ Colors.lightGray } blackText />
+                <CalculatorButton onPress={ () => {} } label='÷' color={ Colors.orange } />
+            </View>
+            <View style={ globalStyles.row }>
+                <CalculatorButton onPress={ () => {} } label='7' color={ Colors.darkGray } />
+                <CalculatorButton onPress={ () => {} } label='8' color={ Colors.darkGray } />
+                <CalculatorButton onPress={ () => {} } label='9' color={ Colors.darkGray } />
+                <CalculatorButton onPress={ () => {} } label='x' color={ Colors.orange } />
+            </View>
+            <View style={ globalStyles.row }>
+                <CalculatorButton onPress={ () => {} } label='4' color={ Colors.darkGray } />
+                <CalculatorButton onPress={ () => {} } label='5' color={ Colors.darkGray } />
+                <CalculatorButton onPress={ () => {} } label='6' color={ Colors.darkGray } />
+                <CalculatorButton onPress={ () => {} } label='-' color={ Colors.orange } />
+            </View>
+            <View style={ globalStyles.row }>
+                <CalculatorButton onPress={ () => {} } label='1' color={ Colors.darkGray } />
+                <CalculatorButton onPress={ () => {} } label='2' color={ Colors.darkGray } />
+                <CalculatorButton onPress={ () => {} } label='3' color={ Colors.darkGray } />
+                <CalculatorButton onPress={ () => {} } label='+' color={ Colors.orange } />
+            </View>
+            <View style={ globalStyles.row }>
+                <CalculatorButton onPress={ () => {} } label='0' color={ Colors.darkGray } isDoubleSize />
+                <CalculatorButton onPress={ () => {} } label='.' color={ Colors.darkGray } />
+                <CalculatorButton onPress={ () => {} } label='=' color={ Colors.orange } />
             </View>
         </View>
     </>
