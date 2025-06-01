@@ -9,12 +9,14 @@ import { View } from 'react-native'
 const CalculatorApp = () => {
 
     const {
-        buildNumber,
-        remove,
-        removeAll,
-        pressOperator,
         formula,
-        number
+        number,
+        
+        buildNumber,
+        removeAll
+        /* remove,
+        removeAll,
+        pressOperator, */
     } = useCalculator();
 
     return <>
@@ -29,27 +31,27 @@ const CalculatorApp = () => {
             {/* Filas de botones */}
             <View style={ globalStyles.row }>
                 <CalculatorButton onPress={ removeAll } label='C' color={ Colors.lightGray } blackText />
-                <CalculatorButton onPress={ () => {} } label='+/-' color={ Colors.lightGray } blackText />
-                <CalculatorButton onPress={ remove } label='del' color={ Colors.lightGray } blackText />
-                <CalculatorButton onPress={ () => pressOperator(Operator.divide) } label='÷' color={ Colors.orange } />
+                <CalculatorButton onPress={ () => buildNumber('-') } label='+/-' color={ Colors.lightGray } blackText />
+                <CalculatorButton onPress={ () => {} } label='del' color={ Colors.lightGray } blackText />
+                <CalculatorButton onPress={ () => {} } label='÷' color={ Colors.orange } />
             </View>
             <View style={ globalStyles.row }>
                 <CalculatorButton onPress={ () => buildNumber('7') } label='7' color={ Colors.darkGray } />
                 <CalculatorButton onPress={ () => buildNumber('8') } label='8' color={ Colors.darkGray } />
                 <CalculatorButton onPress={ () => buildNumber('9') } label='9' color={ Colors.darkGray } />
-                <CalculatorButton onPress={ () => pressOperator(Operator.multiply) } label='x' color={ Colors.orange } />
+                <CalculatorButton onPress={ () => {} } label='x' color={ Colors.orange } />
             </View>
             <View style={ globalStyles.row }>
                 <CalculatorButton onPress={ () => buildNumber('4') } label='4' color={ Colors.darkGray } />
                 <CalculatorButton onPress={ () => buildNumber('5') } label='5' color={ Colors.darkGray } />
                 <CalculatorButton onPress={ () => buildNumber('6') } label='6' color={ Colors.darkGray } />
-                <CalculatorButton onPress={ () => pressOperator(Operator.substract) } label='-' color={ Colors.orange } />
+                <CalculatorButton onPress={ () => buildNumber('-') } label='-' color={ Colors.orange } />
             </View>
             <View style={ globalStyles.row }>
                 <CalculatorButton onPress={ () => buildNumber('1') } label='1' color={ Colors.darkGray } />
                 <CalculatorButton onPress={ () => buildNumber('2') } label='2' color={ Colors.darkGray } />
                 <CalculatorButton onPress={ () => buildNumber('3') } label='3' color={ Colors.darkGray } />
-                <CalculatorButton onPress={ () => pressOperator(Operator.add) } label='+' color={ Colors.orange } />
+                <CalculatorButton onPress={ () => {} } label='+' color={ Colors.orange } />
             </View>
             <View style={ globalStyles.row }>
                 <CalculatorButton onPress={ () => buildNumber('0') } label='0' color={ Colors.darkGray } isDoubleSize />

@@ -1,5 +1,5 @@
 import { Operator } from "@/interfaces/calculator.interface";
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 
 export const useCalculator = () => {
@@ -12,11 +12,21 @@ export const useCalculator = () => {
     const lastOperation = useRef<Operator>();
 
 
-    const buildNumber = (numberDigited: string) => {
-        if( number.includes('.') && numberDigited === '.' ) return;
-        if( number.split('').every( character => character === '0' ) && numberDigited === '0' ) return;
+    useEffect(() => {
+        // TODO: CALCULAR SUBRESULTADO
+        /* setFormula(number); */
+    }, [number]);
+    
 
-        const prev: string = number === '0' && numberDigited !== '.' ? '' : number;
+
+    const buildNumber = (numberDigited: string) => {
+        if(number === '-' && numberDigited === '.') return;
+        if( number.includes('.') && numberDigited === '.' ) return;
+        if( number !== '0' && number !== '-0' && numberDigited === '-' ) return;
+        if( (number === '0' || number === '-0') && numberDigited === '0' ) return;
+
+        console.log({ number, numberDigited })
+        const prev: string = (number === '0' || number === '-0') && numberDigited !== '.' ? number.replaceAll('0', '') : number;
         setNumber(`${ prev }${ numberDigited }`);
     }
 
@@ -51,11 +61,15 @@ export const useCalculator = () => {
     }
 
     return {
+        /* Props */
+        formula,
+        number,
+        previousNumber,
+
+        /* Actions */
         buildNumber,
         remove,
         removeAll,
         pressOperator,
-        formula,
-        number
     }
 }
