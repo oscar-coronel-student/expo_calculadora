@@ -13,11 +13,11 @@ export const useCalculator = () => {
 
 
     useEffect(() => {
+        if(number === '') setNumber('0');
         // TODO: CALCULAR SUBRESULTADO
         /* setFormula(number); */
     }, [number]);
     
-
 
     const buildNumber = (numberDigited: string) => {
         if(number === '-' && numberDigited === '.') return;
@@ -25,7 +25,6 @@ export const useCalculator = () => {
         if( number !== '0' && number !== '-0' && numberDigited === '-' ) return;
         if( (number === '0' || number === '-0') && numberDigited === '0' ) return;
 
-        console.log({ number, numberDigited })
         const prev: string = (number === '0' || number === '-0') && numberDigited !== '.' ? number.replaceAll('0', '') : number;
         setNumber(`${ prev }${ numberDigited }`);
     }
@@ -40,11 +39,19 @@ export const useCalculator = () => {
     }
 
     /* Botón "C" */
-    const removeAll = () => {
+    const clean = () => {
         lastOperation.current = undefined;
         setNumber('0');
         setPreviousNumber('0');
         setFormula('');
+    }
+
+    const changeSign = () => {
+        if( number.includes(Operator.substract) ) {
+            setNumber( number.replace(Operator.substract, '') );
+        } else {
+            setNumber(`${ Operator.substract }${ number }`)
+        }
     }
 
     const pressOperator = (operator: Operator) => {
@@ -69,7 +76,8 @@ export const useCalculator = () => {
         /* Actions */
         buildNumber,
         remove,
-        removeAll,
+        clean,
         pressOperator,
+        changeSign
     }
 }

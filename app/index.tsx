@@ -2,7 +2,6 @@ import { CalculatorButton } from '@/components/CalculatorButton'
 import ThemeText from '@/components/ThemeText'
 import { Colors } from '@/constants/Colors'
 import { useCalculator } from '@/hooks/useCalculator'
-import { Operator } from '@/interfaces/calculator.interface'
 import { globalStyles } from '@/styles/global.style'
 import { View } from 'react-native'
 
@@ -13,10 +12,10 @@ const CalculatorApp = () => {
         number,
         
         buildNumber,
-        removeAll
-        /* remove,
-        removeAll,
-        pressOperator, */
+        clean,
+        remove,
+        pressOperator,
+        changeSign
     } = useCalculator();
 
     return <>
@@ -30,9 +29,9 @@ const CalculatorApp = () => {
 
             {/* Filas de botones */}
             <View style={ globalStyles.row }>
-                <CalculatorButton onPress={ removeAll } label='C' color={ Colors.lightGray } blackText />
-                <CalculatorButton onPress={ () => buildNumber('-') } label='+/-' color={ Colors.lightGray } blackText />
-                <CalculatorButton onPress={ () => {} } label='del' color={ Colors.lightGray } blackText />
+                <CalculatorButton onPress={ clean } label='C' color={ Colors.lightGray } blackText />
+                <CalculatorButton onPress={ changeSign } label='+/-' color={ Colors.lightGray } blackText />
+                <CalculatorButton onPress={ remove } label='del' color={ Colors.lightGray } blackText />
                 <CalculatorButton onPress={ () => {} } label='÷' color={ Colors.orange } />
             </View>
             <View style={ globalStyles.row }>
@@ -45,7 +44,7 @@ const CalculatorApp = () => {
                 <CalculatorButton onPress={ () => buildNumber('4') } label='4' color={ Colors.darkGray } />
                 <CalculatorButton onPress={ () => buildNumber('5') } label='5' color={ Colors.darkGray } />
                 <CalculatorButton onPress={ () => buildNumber('6') } label='6' color={ Colors.darkGray } />
-                <CalculatorButton onPress={ () => buildNumber('-') } label='-' color={ Colors.orange } />
+                <CalculatorButton onPress={ () => {} } label='-' color={ Colors.orange } />
             </View>
             <View style={ globalStyles.row }>
                 <CalculatorButton onPress={ () => buildNumber('1') } label='1' color={ Colors.darkGray } />
