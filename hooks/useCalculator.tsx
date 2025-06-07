@@ -1,21 +1,21 @@
 import { Operator } from "@/interfaces/calculator.interface";
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 
+const allOperators = Object.values(Operator);
+const hasOperator = (forTest: string, test: 'start'|'end') => 
+    allOperators.some(op => test === 'start' ? forTest.startsWith(op) : forTest.endsWith(op))
 
 export const useCalculator = () => {
 
     const [formula, setFormula] = useState<string>('');
-
     const [number, setNumber] = useState<string>('0');
-    const [previousNumber, setPreviousNumber] = useState<string>('0');
-
-    const lastOperation = useRef<Operator>();
-
+    const [currentResult, setCurrentResult] = useState('');
 
     useEffect(() => {
-        if(number === '') setNumber('0');
-        // TODO: CALCULAR SUBRESULTADO
-        /* setFormula(number); */
+        const newNumber = number === '' ? '0' : number;
+        if(number === ''){
+            setNumber(newNumber);
+        };
     }, [number]);
     
 
@@ -31,7 +31,9 @@ export const useCalculator = () => {
 
     /* Botón "del" */
     const remove = () => {
-        if( number.length > 1 ) {
+        const tempNumber: string = number.replaceAll('-', '');
+
+        if( tempNumber.length > 1 ) {
             setNumber( number.slice(0, number.length - 1) )
             return;
         }
@@ -40,10 +42,9 @@ export const useCalculator = () => {
 
     /* Botón "C" */
     const clean = () => {
-        lastOperation.current = undefined;
         setNumber('0');
-        setPreviousNumber('0');
         setFormula('');
+        setCurrentResult('');
     }
 
     const changeSign = () => {
@@ -55,29 +56,59 @@ export const useCalculator = () => {
     }
 
     const pressOperator = (operator: Operator) => {
-        /* if(Object.values(Operator).some( op => formula.endsWith(op) )) return; */
-        if(number === '.') return;
+        if(number.endsWith('.') || ['0','-0'].some( value => value === number )) return;
 
-        lastOperation.current = operator;
-        setFormula(`${ formula }${ number }${ operator }`);
+        const newResult = calculate();
+        const newNumber: string = getNumberForTransferToFormula();
+
+        setFormula(`${ formula }${ newNumber }${ operator }`)
         setNumber('0');
+        setCurrentResult(newResult.toString());
     }
 
     const pressResult = () => {
+        if(
+            formula === ''
+        ) return;
 
+        try {
+            const newNumber: string = getNumberForTransferToFormula();
+            const formulaToExecute: string = `${ formula }${ newNumber }`.replace(/x/g, '*').replace(/÷/g, '/');
+            const result = Function(`"use strict"; return (${ formulaToExecute })`)();
+            setFormula('');
+            setNumber(result.toString());
+            setCurrentResult(result.toString());
+        } catch (error: any) {
+            console.log('ERROR AL CALCULAR EL RESULTADO');
+            console.log(error.message);
+        }
+    }
+
+    const getNumberForTransferToFormula = (): string => {
+        const hasNeedParenthesis = hasOperator(formula, 'end') && hasOperator(number, 'start')
+        const newNumber: string = hasNeedParenthesis ? `(${ number })` : number;
+        return newNumber;
+    }
+
+    const calculate = () => {
+        const newNumber: string = getNumberForTransferToFormula();
+        const formulaToExecute: string = `${ formula }${ newNumber }`.replace(/x/g, '*').replace(/÷/g, '/');
+        const result = Function(`"use strict"; return (${ formulaToExecute })`)();
+        return result;
     }
 
     return {
         /* Props */
         formula,
-        number,
-        previousNumber,
+        currentResult,
 
         /* Actions */
         buildNumber,
         remove,
         clean,
         pressOperator,
-        changeSign
+        changeSign,
+        pressResult,
+        getNumberForTransferToFormula
     }
 }
