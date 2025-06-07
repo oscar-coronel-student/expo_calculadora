@@ -16,6 +16,11 @@ export const useCalculator = () => {
         if(number === ''){
             setNumber(newNumber);
         };
+
+        if(number !== '' && !['0','-0'].some( value => value === number )){
+            const newResult = calculate();
+            setCurrentResult(newResult.toString());
+        }
     }, [number]);
     
 
@@ -57,13 +62,11 @@ export const useCalculator = () => {
 
     const pressOperator = (operator: Operator) => {
         if(number.endsWith('.') || ['0','-0'].some( value => value === number )) return;
-
-        const newResult = calculate();
+        
         const newNumber: string = getNumberForTransferToFormula();
 
         setFormula(`${ formula }${ newNumber }${ operator }`)
         setNumber('0');
-        setCurrentResult(newResult.toString());
     }
 
     const pressResult = () => {
